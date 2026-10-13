@@ -1,9 +1,11 @@
 import * as THREE from 'three'
 import { motion, smooth, rand } from './motion.js'
 
-const N = 7000
+// phones get fewer particles: the shapes are smaller on screen and mobile GPUs pay for every additive point
+const small = typeof window !== 'undefined' && window.matchMedia('(max-width: 860px)').matches
+const N = small ? 4000 : 7000
 const GAP = 18
-const D = 3200
+const D = small ? 1800 : 3200
 const DEPTH = 70
 
 function shapeBlob() {

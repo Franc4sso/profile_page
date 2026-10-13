@@ -17,7 +17,8 @@ export default function Bot({ open, onOpen, onClose }) {
   useEffect(() => {
     if (!open) return
     if (!greeted.current) { greeted.current = true; setMsgs([{ who: 'ai', html: GREETING }]); setChips(SUGGESTIONS.slice(0, 3)) }
-    const t = setTimeout(() => input.current?.focus(), 300)
+    // on touch screens focusing would throw the keyboard up over the suggestions
+    const t = motion.hover ? setTimeout(() => input.current?.focus(), 300) : 0
     const esc = (e) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', esc)
     return () => { clearTimeout(t); document.removeEventListener('keydown', esc) }
